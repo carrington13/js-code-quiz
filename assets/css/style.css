@@ -1,0 +1,52 @@
+* {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+}
+
+/* Header Style */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    font-size: 16px;
+}
+
+.timer {
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+
+
+
+/* Main/Quiz Style */
+.question {
+    text-align: center;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.instructions {
+    width: 50%;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+
+}
+.btn {
+    background-color: rgb(75, 0, 130);
+    color: rgb(255, 255, 255);
+    margin: 0 auto;
+    width: 10%;
+    height: 45px;
+    border-radius: 10px;
+    font-size: large;
+}
