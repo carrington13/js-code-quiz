@@ -36,17 +36,32 @@ header {
     margin-bottom: 15px;
 }
 
+.quiz-start {
+    display: none;
+}
+
 .button-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    width: 50%;
+    margin: 0 auto;
 
 }
 .btn {
+    
     background-color: rgb(75, 0, 130);
     color: rgb(255, 255, 255);
     margin: 0 auto;
-    width: 10%;
+    width: 20%;
     height: 45px;
     border-radius: 10px;
     font-size: large;
+    outline: none;
+    margin: 5px auto;
+}
+
+.btn:active {
+    background-color: rgb(153, 50, 204);
+    outline: none;
 }
