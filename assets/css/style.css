@@ -40,7 +40,7 @@ header {
     display: none;
 }
 
-.button-container {
+.button-start-container, .button-container {
     display: flex;
     flex-direction: column;
     justify-content: center;

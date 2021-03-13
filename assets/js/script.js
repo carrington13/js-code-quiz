@@ -3,35 +3,62 @@ let startBtn = document.querySelector("#startquiz");
 let questionEl = document.querySelector("#question");
 let timerEl = document.querySelector("#timer");
 let instructionsEl = document.querySelector("#instructions");
-let answerChoicesObjArr = [
-    one = ["a", "b", "c", "d"],
-    two = ["a", "b", "c", "d"],
-    three = ["a", "b", "c", "d"],
-    four = ["a", "b", "c", "d"],
-    five = ["a", "b", "c", "d"],
-    six = ["a", "b", "c", "d"],
-    seven = ["a", "b", "c", "d"],
-    eight = ["a", "b", "c", "d"],
-    nine = ["a", "b", "c", "d"],
-    ten = ["a", "b", "c", "d"],
+let btnContainer = document.querySelector("#button-container");
+// initialize button array
+let btnArr = [];
+
+let questionCount = 0;
+
+let answerArr = [
+    answerOneArr = ["a. call thisFunction;", "b. thisFunction();", "c. var thisFunction();", "d. thisfunction;"],
+    answerTwoArr = ["a", "b", "c", "d"],
+    answerThreeArr = ["a.3", "b.3", "c.3", "d.3"],
+    answerFourArr = ["a", "b", "c", "d"],
+    answerFiveArr = ["a", "b", "c", "d"],
 ] 
 
 let questionObjArr = [
-    { question: "test", answer: "a", answerChoices: answerChoicesObjArr[0]},
-    { question: "test2", answer: "a", answerChoices: answerChoicesObjArr[1]},
-    { question: "test3", answer: "a", answerChoices: answerChoicesObjArr[2]}, 
-    { question: "test4", answer: "a", answerChoices: answerChoicesObjArr[3]},
-    { question: "test5", answer: "a", answerChoices: answerChoicesObjArr[4]},
-    { question: "test6", answer: "a", answerChoices: answerChoicesObjArr[5]},
-    { question: "test7", answer: "a", answerChoices: answerChoicesObjArr[6]},
-    { question: "test8", answer: "a", answerChoices: answerChoicesObjArr[7]},
-    { question: "test9", answer: "a", answerChoices: answerChoicesObjArr[8]},
-    { question: "test10", answer: "a", answerChoices: answerChoicesObjArr[9]},
+    // question 1
+    { question: "How do you call a function named 'thisFunction'?", answer: "b. thisFunction();", answerChoices: answerOneArr},
+    // question 2
+    { question: "test2", answer: "a", answerChoices: answerTwoArr},
+    // question 3
+    { question: "test3", answer: "a", answerChoices: answerThreeArr}, 
+    // question 4
+    { question: "test4", answer: "a", answerChoices: answerFourArr},
+    // question 5
+    { question: "test5", answer: "a", answerChoices: answerFiveArr},
+//     { question: "test6", answer: "a", answerChoices: answerChoicesObjArr[5]},
+//     { question: "test7", answer: "a", answerChoices: answerChoicesObjArr[6]},
+//     { question: "test8", answer: "a", answerChoices: answerChoicesObjArr[7]},
+//     { question: "test9", answer: "a", answerChoices: answerChoicesObjArr[8]},
+//     { question: "test10", answer: "a", answerChoices: answerChoicesObjArr[9]},
+// ]
 ]
-
 // empty arr for high scores
 let highScore = [];
+
 //TODO
+
+// function to check answer
+let checkAnswer = function(event) {
+    event.target
+    console.log(event.target);
+    // compare selected answer with array answer
+    if (event.target.textContent !== questionObjArr[questionCount].answer) {
+        console.log("wrong");
+    } else {
+        console.log("correct")
+    }
+    // add if else statement here
+    // if wrong
+        // make element to say Wrong! and
+        // deduct time penalty
+    // else (if correct)
+        // make element to say Correct!
+        // add 1 to score
+    
+}
 
 // function to start timer countdown
 function countdown(x) {
@@ -46,54 +73,58 @@ function countdown(x) {
         }
     }, 1000);
 }
-// TODO
-// SET ARR TO HOLD EACH QUESTION
-// SET ANSWERARR TO HOLD A SET OF ANSWERS FOR EACH QUESTION
-// ADD FUNCTIONALITY TO BUTTON ONCLICK TO CHECK ANSWER//LOOP TO NEXT QUESTION/ANSWER-SET
-// COMPARE SELECTED ANSWER TO CORRECT ANSWER
-    // IF INCORRECT/FALSE -> DISPLAY "WRONG" AND CALL PENALTY -> DISPLAY NEXT QUESTION
-    // ELSE -> DISPLAY NEXT QUESTION
     
     // function to start quiz
-    function startQuiz() {
-        // initialize button array
-        let btnArr = [];
-        // question one answer array
-        let answerArr = [
-            // answer one [0]
-            "a. call thisFunction;",
-            // two [1]
-            "b. thisFunction();",
-            // three [2]
-            "c. var thisFunction();",
-            // four [3]
-            "d. thisfunction;"
-        ]
-        // change header to display question
-        questionEl.textContent = "How do you call a function named 'thisFunction'?";
-        // hide <p> and startbutton
-        instructionsEl.setAttribute("class", "quiz-start");
-        startBtn.setAttribute("class", "quiz-start");
-        // create answerBtnEl 
-        // create btnContainer div 
-        let btnContainer = document.querySelector("#button-container");
-        // for loop for answerBtn generation
-        for (let i = 0; i < 4; i++) {
-            debugger;
-            // create answerBtn element
-            answerBtnEl = document.createElement("button");
-            // add class styling
-            answerBtnEl.className = 'btn';
-            // push to empty array for call and content sync
-            btnArr.push(answerBtnEl);
-            // add text from preset answer array
-            btnArr[i].textContent = answerArr[i];
+function startQuiz() {
+    
+    // assign text to value of first question;
+    questionEl.textContent = questionObjArr[0].question;
+    //"How do you call a function named 'thisFunction'?";
+    // hide <p> and startbutton
+    instructionsEl.setAttribute("class", "quiz-start");
+    startBtn.setAttribute("class", "quiz-start");
+    // create answerBtnEl
+    
+    // for loop for answerBtn generation
+    for (let i = 0; i < 4; i++) {
+        // create answerBtn element
+        answerBtnEl = document.createElement("button");
+        // add class styling
+        answerBtnEl.className = 'btn';
+        // add text from answerChoices property
+        answerBtnEl.textContent = questionObjArr[questionCount].answerChoices[i];
+       
+        // push to empty array for call and content sync
+        answerBtnEl.setAttribute("id", `button${i}`);
+        // append answerBtnEl to its parent container
+    
+        btnArr.push(answerBtnEl);
+        // append answerBtnEl to its parent container
+    
+        btnContainer.appendChild(btnArr[i]);
+        // add one value to btnId per interation of loop
+    } 
 
-            // append answerBtnEl to its parent container
-            btnContainer.appendChild(btnArr[i]);
-        } 
+    btnContainer.addEventListener("click", function(event) {    
+        // check answer BEFORE adding value to question count
+        checkAnswer(event);
+        // add value to questionCount for quizProgression
+        questionCount++;
+        quizProgression();
+    });
+}
+// function for quizProgression
+// end of first question -> last question
+let quizProgression = function (){
+    // question and answer progression
+    questionEl.textContent = questionObjArr[questionCount].question;
+    // for loop to change btn text to new answer choices
+    for (let i = 0; i < 4; i++) {
+        btnArr[i].textContent = questionObjArr[questionCount].answerChoices[i];
+    };
+}
 
-    }
+
 // When I click on "Start Quiz"
 startBtn.addEventListener("click", function() {
     // begin timer
