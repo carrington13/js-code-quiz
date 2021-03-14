@@ -9,26 +9,26 @@
 </head>
 <body>
     <header class="top">
-        <div id="high-score">
-            <p>View high scores</p>
-        </div>
+        <nav id="high-score">
+            <a href="./highscore.html">View high scores</a>
+        </nav>
         <div>
             <p id="timer" class="timer">Time: 0</p>
         </div>
     </header>
-    <main id="quiz-container">
+    <main id="quiz-container" class="quiz-container">
         <div id="question-container" class="question">
             <h1 id ="question" class="question">Coding Quiz Challenge</h1>
         </div>
         <div id="instructions" class="instructions">
-            <p> 
+            <p id="text"> 
                 This is a quiz to test your knowledge of JavaScript! Once you begin, you will have a limited time to answer the questions.
                 For every wrong answer, your score/time will be penalized by ten seconds! The quiz will end when you: answer all the questions or:
                 when the timer hits 0. When you are ready to start, hit the button below. Good Luck!
             </p>
         </div>
-        <div class= "button-start-container">
-            <button id="startquiz" class="btn">Start Button</button>
+        <div id= "end-form" class= "button-start-container">
+            <button id="start-quiz" class="btn">Start Button</button>
         </div>
         <div id="button-container" class="button-container">
         </div>

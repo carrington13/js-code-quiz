@@ -22,10 +22,18 @@ header {
 
 
 /* Main/Quiz Style */
+.quiz-container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-around;
+}
 .question {
     text-align: center;
     font-weight: bold;
-    padding: 20px;
+    padding: 10px;
 }
 
 .instructions {
@@ -48,6 +56,10 @@ header {
     margin: 0 auto;
 
 }
+
+.button-container {
+    justify-content: flex-start;
+}
 .btn {
     
     background-color: rgb(75, 0, 130);
@@ -58,10 +70,32 @@ header {
     border-radius: 10px;
     font-size: large;
     outline: none;
+    margin: 5px;
+}
+
+#start-quiz {
     margin: 5px auto;
 }
 
 .btn:active {
     background-color: rgb(153, 50, 204);
     outline: none;
+}
+
+.answer-check {
+    border-top: 3px solid rgb(175, 175, 175);
+    margin-top: 5px;
+    font-style: italic;
+    color: rgb(175, 175, 175);
+}
+
+.end-quiz {
+    text-align: center;
+    font-size: 22px;
+}
+
+.end-form {
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-evenly;
 }

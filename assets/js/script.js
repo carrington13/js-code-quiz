@@ -1,81 +1,88 @@
+let answerArr = [
+    answerOneArr = ["a. call thisFunction;", "b. thisFunction();", "c. var thisFunction();", "d. thisfunction;"],
+    answerTwoArr = ["a. <link>", "b. <a> ", "c. <source>", "d. <script>"],
+    answerThreeArr = ["a. A type of conditional for the function", "b. Names list in the function definition", "c. Real values passed to the function", "d. Conflicting code within a function"],
+    answerFourArr = ["a. A var declared anywhere in a scipt file", "b. A var delcared inside of a function", "c. A var declared anywhere in a webpage's file(s) ", "d. A var declared near other functions in a script file"],
+    answerFiveArr = ["a. object", "b. boolean", "c. undefined", "d. string"],
+] 
 
-let startBtn = document.querySelector("#startquiz");
+const questionObjArr = [
+    // question 1
+    { question: "How do you call a function named 'thisFunction'?", answer: "b. thisFunction();", answerChoices: answerOneArr},
+    // question 2
+    { question: "How do you link an external JS file to an html file? ", answer: "d. <script>", answerChoices: answerTwoArr},
+    // question 3
+    { question: "What are function arguments?" , answer: "c. Real values passed to the function", answerChoices: answerThreeArr}, 
+    // question 4
+    { question: "What is a local scope variable?", answer: "b. A var delcared inside of a function", answerChoices: answerFourArr},
+    // question 5
+    { question: "Which of the following is NOT an example of primitive data", answer: "a. object", answerChoices: answerFiveArr},
+]
+
+// Global DOM var
+let startBtn = document.querySelector("#start-quiz");
 let questionEl = document.querySelector("#question");
 let timerEl = document.querySelector("#timer");
 let instructionsEl = document.querySelector("#instructions");
 let btnContainer = document.querySelector("#button-container");
-// initialize button array
+
+// Global Var
 let btnArr = [];
-
 let questionCount = 0;
-
-let answerArr = [
-    answerOneArr = ["a. call thisFunction;", "b. thisFunction();", "c. var thisFunction();", "d. thisfunction;"],
-    answerTwoArr = ["a", "b", "c", "d"],
-    answerThreeArr = ["a.3", "b.3", "c.3", "d.3"],
-    answerFourArr = ["a", "b", "c", "d"],
-    answerFiveArr = ["a", "b", "c", "d"],
-] 
-
-let questionObjArr = [
-    // question 1
-    { question: "How do you call a function named 'thisFunction'?", answer: "b. thisFunction();", answerChoices: answerOneArr},
-    // question 2
-    { question: "test2", answer: "a", answerChoices: answerTwoArr},
-    // question 3
-    { question: "test3", answer: "a", answerChoices: answerThreeArr}, 
-    // question 4
-    { question: "test4", answer: "a", answerChoices: answerFourArr},
-    // question 5
-    { question: "test5", answer: "a", answerChoices: answerFiveArr},
-//     { question: "test6", answer: "a", answerChoices: answerChoicesObjArr[5]},
-//     { question: "test7", answer: "a", answerChoices: answerChoicesObjArr[6]},
-//     { question: "test8", answer: "a", answerChoices: answerChoicesObjArr[7]},
-//     { question: "test9", answer: "a", answerChoices: answerChoicesObjArr[8]},
-//     { question: "test10", answer: "a", answerChoices: answerChoicesObjArr[9]},
-// ]
-]
-// empty arr for high scores
 let highScore = [];
-
-//TODO
+let score = 0;
+let time = 75;
 
 // function to check answer
 let checkAnswer = function(event) {
-    event.target
-    console.log(event.target);
+
+    let answerCheckEL = document.createElement("h1");
+    document.getElementById("quiz-container").appendChild(answerCheckEL);
     // compare selected answer with array answer
     if (event.target.textContent !== questionObjArr[questionCount].answer) {
-        console.log("wrong");
-    } else {
-        console.log("correct")
+        //Time penalty
+        time -= 10;
+        answerCheckEL.setAttribute("class", "answer-check");
+        answerCheckEL.textContent = "Wrong!";    
+        setTimeout(function(){
+        answerCheckEL.setAttribute("class", "quiz-start");
+        }, 1000);
     }
-    // add if else statement here
-    // if wrong
-        // make element to say Wrong! and
-        // deduct time penalty
-    // else (if correct)
-        // make element to say Correct!
-        // add 1 to score
-    
+
+     else {
+        answerCheckEL.setAttribute("class", "answer-check");
+        answerCheckEL.textContent = "Correct!";    
+        setTimeout(function(){
+        answerCheckEL.setAttribute("class", "quiz-start");
+    }, 1000);    
+}
 }
 
-// function to start timer countdown
-function countdown(x) {
-    let timeRemaining = x;
-
+// // function to start timer countdown
+let countdown =  function(){
+    
     let timeInterval = setInterval(function(){
-        if (timeRemaining === 0) {
+        let timeRemaining = time;
+
+        if (timeRemaining <= 0 || questionCount === 5) {
+            debugger;
             clearInterval(timeInterval);
+            score = timeRemaining;
+            console.log(score);
+            quizEnd();
+            
         } else {
             timerEl.textContent = `Time: ${timeRemaining}`;
             timeRemaining--;
+            
+            time = timeRemaining;        
         }
     }, 1000);
 }
+
     
     // function to start quiz
-function startQuiz() {
+let startQuiz = function() {
     
     // assign text to value of first question;
     questionEl.textContent = questionObjArr[0].question;
@@ -96,13 +103,12 @@ function startQuiz() {
        
         // push to empty array for call and content sync
         answerBtnEl.setAttribute("id", `button${i}`);
+        
         // append answerBtnEl to its parent container
-    
         btnArr.push(answerBtnEl);
+        
         // append answerBtnEl to its parent container
-    
         btnContainer.appendChild(btnArr[i]);
-        // add one value to btnId per interation of loop
     } 
 
     btnContainer.addEventListener("click", function(event) {    
@@ -116,19 +122,82 @@ function startQuiz() {
 // function for quizProgression
 // end of first question -> last question
 let quizProgression = function (){
+    if (questionCount < 5) {
     // question and answer progression
     questionEl.textContent = questionObjArr[questionCount].question;
     // for loop to change btn text to new answer choices
     for (let i = 0; i < 4; i++) {
         btnArr[i].textContent = questionObjArr[questionCount].answerChoices[i];
     };
+    } else {
+        quizEnd();
+    }
 }
+
+let quizEnd = function() {
+    console.log(score);
+    questionEl.textContent = "All done!"
+    // display final score
+    startBtn.setAttribute("class", "quiz-start");
+    instructionsEl.removeAttribute("class", "quiz-start");
+    let endText = document.getElementById("text");
+    endText.textContent = `Your final score is ${score}.`;
+    endText.setAttribute("class", "end-quiz");
+    // form for high score submission
+    let endFormEl = document.getElementById("end-form");
+    endFormEl.setAttribute("class", "end-form");
+    let labelEl = document.createElement("label");
+    labelEl.setAttribute("for", "initials");
+    labelEl.setAttribute("class", "end-quiz")
+    labelEl.textContent = "Enter initials:"
+    let inputEl = document.createElement("input");
+    inputEl.setAttribute("type", "text");
+    inputEl.setAttribute("name", "initials");
+    inputEl.setAttribute("id", "initials");
+    let submitBtn = document.createElement("button");
+    submitBtn.setAttribute("class", "btn");
+    submitBtn.textContent = "Submit";
+
+    endFormEl.appendChild(labelEl);
+    endFormEl.appendChild(inputEl);
+    endFormEl.appendChild(submitBtn);
+
+    // initialize user object to push to highscore
+    let user = {finalScore: score};
+    // capture input and saveInitials
+    submitBtn.addEventListener("click", function() {
+        user.input = inputEl.value;
+            if (initials.length > 3 || initials.length === 0) {
+             alert("Invalid input. Please put at least one and at most three characters.");
+            } else {
+                console.log(user.input);
+                highScore.push(user);
+                // localStorage.setItem(initials, JSON.stringify(score));    
+            }
+    })
+}
+
+const saveScore = function() {
+    // if score > lowest of highscore(3 in total length)
+        // push user object with score and name to highscores
+        // save user to localStorage
+    // else 
+        // alert user that score wasnt high enough
+}
+
+const loadScore = function() {
+    // if localStorage has data, load into highscore array,
+        // else nothing?
+
+}
+
 
 
 // When I click on "Start Quiz"
 startBtn.addEventListener("click", function() {
     // begin timer
-    countdown(75);
-    // call function startQuiz with start button event.
-    startQuiz();
-})
+    // countdown();
+    // // call function startQuiz with start button event.
+    // startQuiz();
+    quizEnd();
+});
