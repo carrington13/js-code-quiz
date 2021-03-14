@@ -18,6 +18,11 @@ header {
     font-size: 20px;
 }
 
+a {
+    text-decoration: none;
+    color:rgb(153, 50, 204);
+}
+
 
 
 
@@ -59,18 +64,21 @@ header {
 
 .button-container {
     justify-content: flex-start;
+    
 }
 .btn {
     
     background-color: rgb(75, 0, 130);
     color: rgb(255, 255, 255);
-    margin: 0 auto;
-    width: 20%;
+    margin: 10px;
+    padding: 10px;
     height: 45px;
     border-radius: 10px;
     font-size: large;
     outline: none;
-    margin: 5px;
+    width: 50%;
+    text-align: center;
+    
 }
 
 #start-quiz {
@@ -92,10 +100,73 @@ header {
 .end-quiz {
     text-align: center;
     font-size: 22px;
+    margin: auto 5px;
 }
 
 .end-form {
-    margin: 10px auto;
+    margin: 5px;
+    align-self: center;
+    padding: 8px;
+}
+
+#end-form {
+    flex-direction: row;
+}
+/*  highscore.html style  */
+
+h1, h2 {
+    text-align: center;
+}
+
+.row {
+    width: 60%;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-evenly;
+    
+}
+
+.column {
+    width: 50%;
+    border: black solid 3px;
+}
+
+.col-item {
+    text-align: center;
+    padding: 5px;
+    font-size: 18px;
+    border-top: 3px solid black;
+
+}
+
+@media screen and (max-width:1175px) {
+    .btn {
+        width: 100%;
+    
+    }
+    .button-container {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width:775px) {
+    .button-container {
+        width: 90%;
+    }
+
+    #end-form {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width:575px) {
+    .btn {
+        height: fit-content;
+
+    }
+
+    .instructions {
+        width: 80%;
+        font-size: 16px;
+
+    }
 }

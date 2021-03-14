@@ -15,15 +15,32 @@
     </header>
     <main>
         <h1>High Scores</h1>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Score</th>
-            </tr>
-            <tr>
-                
-            </tr>
-        </table>
+        <div class="row">
+            <div id="name-column" class="column">
+                <h2>Name</h2>
+
+            </div>
+            <div id="score-column" class="column">
+                <h2>Score</h2>
+            </div>
+        </div>
+
+        <script src="./assets/js/script.js"></script>
+        <script>
+            window.onload = function() {
+                for (let i = 0; i < highScore.length; i++) {
+                    let name = document.createElement("p");
+                    name.textContent = highScore[i].name;
+                    name.setAttribute("class", "col-item");
+                    let score = document.createElement("p");
+                    score.textContent = highScore[i].finalScore;
+                    score.setAttribute("class", "col-item");
+                    document.getElementById("name-column").appendChild(name);
+                    document.getElementById("score-column").appendChild(score);
+
+                }
+            }
+        </script>
     </main>
 </body>
 </html>

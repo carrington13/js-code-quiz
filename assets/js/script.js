@@ -65,7 +65,6 @@ let countdown =  function(){
         let timeRemaining = time;
 
         if (timeRemaining <= 0 || questionCount === 5) {
-            debugger;
             clearInterval(timeInterval);
             score = timeRemaining;
             console.log(score);
@@ -123,14 +122,12 @@ let startQuiz = function() {
 // end of first question -> last question
 let quizProgression = function (){
     if (questionCount < 5) {
-    // question and answer progression
-    questionEl.textContent = questionObjArr[questionCount].question;
-    // for loop to change btn text to new answer choices
-    for (let i = 0; i < 4; i++) {
-        btnArr[i].textContent = questionObjArr[questionCount].answerChoices[i];
-    };
-    } else {
-        quizEnd();
+        // question and answer progression
+        questionEl.textContent = questionObjArr[questionCount].question;
+        // for loop to change btn text to new answer choices
+        for (let i = 0; i < 4; i++) {
+            btnArr[i].textContent = questionObjArr[questionCount].answerChoices[i];
+        };
     }
 }
 
@@ -138,6 +135,7 @@ let quizEnd = function() {
     console.log(score);
     questionEl.textContent = "All done!"
     // display final score
+    btnContainer.setAttribute("class", "quiz-start");
     startBtn.setAttribute("class", "quiz-start");
     instructionsEl.removeAttribute("class", "quiz-start");
     let endText = document.getElementById("text");
@@ -145,7 +143,6 @@ let quizEnd = function() {
     endText.setAttribute("class", "end-quiz");
     // form for high score submission
     let endFormEl = document.getElementById("end-form");
-    endFormEl.setAttribute("class", "end-form");
     let labelEl = document.createElement("label");
     labelEl.setAttribute("for", "initials");
     labelEl.setAttribute("class", "end-quiz")
@@ -154,6 +151,7 @@ let quizEnd = function() {
     inputEl.setAttribute("type", "text");
     inputEl.setAttribute("name", "initials");
     inputEl.setAttribute("id", "initials");
+    inputEl.setAttribute("class", "end-form");
     let submitBtn = document.createElement("button");
     submitBtn.setAttribute("class", "btn");
     submitBtn.textContent = "Submit";
@@ -166,38 +164,47 @@ let quizEnd = function() {
     let user = {finalScore: score};
     // capture input and saveInitials
     submitBtn.addEventListener("click", function() {
-        user.input = inputEl.value;
-            if (initials.length > 3 || initials.length === 0) {
-             alert("Invalid input. Please put at least one and at most three characters.");
-            } else {
-                console.log(user.input);
-                highScore.push(user);
-                // localStorage.setItem(initials, JSON.stringify(score));    
-            }
-    })
+        user.name = inputEl.value;
+        if (user.name.length > 3 || user.name.length === 0) {
+           alert("Invalid input. Please put at least one and at most three characters.");
+        } else { 
+            highScore.push(user);
+            saveScore();
+            setTimeout(function(){
+                location.reload();
+                return false;
+            }, 1500);
+        }
+    });
 }
 
 const saveScore = function() {
-    // if score > lowest of highscore(3 in total length)
-        // push user object with score and name to highscores
-        // save user to localStorage
-    // else 
-        // alert user that score wasnt high enough
-}
+    localStorage.setItem("highScoreObj", JSON.stringify(highScore));
+    }
 
 const loadScore = function() {
-    // if localStorage has data, load into highscore array,
-        // else nothing?
+    let savedScores = localStorage.getItem("highScoreObj");
 
+    if (!savedScores) {
+        return false;
+    }
+
+    highScore = JSON.parse(savedScores);
 }
 
+
+
+loadScore();
 
 
 // When I click on "Start Quiz"
-startBtn.addEventListener("click", function() {
-    // begin timer
-    // countdown();
-    // // call function startQuiz with start button event.
-    // startQuiz();
-    quizEnd();
-});
+const start = () => {
+    startBtn.addEventListener("click", function() {
+        // begin timer
+        countdown();
+    // call function startQuiz with start button event.
+         startQuiz();
+    });
+}
+
+window.onload = start;
