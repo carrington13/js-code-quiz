@@ -33,6 +33,9 @@ let highScore = [];
 let score = 0;
 let time = 75;
 
+
+
+
 // function to check answer
 let checkAnswer = function(event) {
 
@@ -132,7 +135,7 @@ let quizProgression = function (){
 }
 
 let quizEnd = function() {
-    console.log(score);
+    
     questionEl.textContent = "All done!"
     // display final score
     btnContainer.setAttribute("class", "quiz-start");
@@ -167,14 +170,23 @@ let quizEnd = function() {
         user.name = inputEl.value;
         if (user.name.length > 3 || user.name.length === 0) {
            alert("Invalid input. Please put at least one and at most three characters.");
-        } else { 
-            highScore.push(user);
-            saveScore();
+        } else {
+            if (highScore.length < 3) { 
+                highScore.push(user);
+                saveScore();
+            } else if (user.finalScore > highScore[2].finalScore) {
+                highScore.pop();
+                highScore.push(user);
+                saveScore();
+            } else {
+                alert("Your score wasn't high enough. Please try again!");
+            }
             setTimeout(function(){
                 location.reload();
                 return false;
             }, 1500);
         }
+
     });
 }
 
@@ -190,9 +202,17 @@ const loadScore = function() {
     }
 
     highScore = JSON.parse(savedScores);
+
+    sortHighScore();
+
+    console.log(highScore);
 }
 
-
+const sortHighScore = function () {
+    highScore.sort(function (a, b) {
+        return b.finalScore - a.finalScore;
+    });
+}
 
 loadScore();
 
